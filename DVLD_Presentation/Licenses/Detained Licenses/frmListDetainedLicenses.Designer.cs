@@ -57,6 +57,7 @@
             this.dlDetainedLicenses.Name = "dlDetainedLicenses";
             this.dlDetainedLicenses.Size = new System.Drawing.Size(1508, 455);
             this.dlDetainedLicenses.TabIndex = 128;
+            this.dlDetainedLicenses.RowDoubleClick += new System.EventHandler(this.dlDetainedLicenses_RowDoubleClick);
             // 
             // cmsDetainedLicenses
             // 

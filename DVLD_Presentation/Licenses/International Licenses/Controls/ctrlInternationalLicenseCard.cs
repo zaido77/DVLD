@@ -28,7 +28,7 @@ namespace DVLD_Presentation.Licenses.International_Licenses.Controls
         {
             InitializeComponent();
 
-            lblName.ForeColor = clsSettings.MainColor;
+            lblName.ForeColor = clsUISettings.MainColor;
         }
 
         private void _LoadPersonImage()

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD_Business
 {
@@ -15,6 +16,7 @@ namespace DVLD_Business
 
         public int ID { get; set; }
         public int ApplicationID { get; set; }
+        public clsApplication ApplicationInfo;
         public int DriverID { get; set; }
         public clsDriver DriverInfo;
         public int IssuedUsingLocalLicenseID { get; set; }
@@ -32,6 +34,7 @@ namespace DVLD_Business
         {
             this.ID = -1;
             this.ApplicationID = -1;
+            this.ApplicationInfo = new clsApplication(clsApplication.enApplicationType.NewInternationalLicense);
             this.DriverID = -1;
             this.IssuedUsingLocalLicenseID = -1;
             this.IssueDate = DateTime.Now;
@@ -48,6 +51,7 @@ namespace DVLD_Business
         {
             this.ID = InternationalLicenseID;
             this.ApplicationID = ApplicationID;
+            this.ApplicationInfo = clsApplication.Find(ApplicationID);
             this.DriverID = DriverID;
             this.DriverInfo = clsDriver.FindByDriverID(DriverID);
             this.IssuedUsingLocalLicenseID = IssuedUsingLocalLicenseID;
@@ -161,7 +165,7 @@ namespace DVLD_Business
             return clsInternationalLicenseData.UpdateIsActive(ID, false);
         }
 
-        public static clsInternationalLicense IssueInternationalLicense(int LicenseID, int ApplicationID, int CreatedByUserID)
+        public static clsInternationalLicense IssueInternationalLicense(int LicenseID, int CreatedByUserID)
         {
             clsLicense License = clsLicense.Find(LicenseID);
 
@@ -179,8 +183,17 @@ namespace DVLD_Business
                 return null;
             }
 
+            clsApplication Application = new clsApplication(clsApplication.enApplicationType.NewInternationalLicense);
+
+            Application.ApplicantPersonID = License.DriverInfo.PersonID;
+            Application.Status = clsApplication.enStatus.Completed;
+            Application.CreatedByUserID = CreatedByUserID;
+
+            if (!Application.Save())
+                return null;
+
             clsInternationalLicense NewInternationalLicense = new clsInternationalLicense();
-            NewInternationalLicense.ApplicationID = ApplicationID;
+            NewInternationalLicense.ApplicationID = Application.ApplicationID;
             NewInternationalLicense.DriverID = License.DriverID;
             NewInternationalLicense.IssuedUsingLocalLicenseID = License.ID;
             NewInternationalLicense.IssueDate = DateTime.Now;
@@ -188,13 +201,14 @@ namespace DVLD_Business
             NewInternationalLicense.IsActive = true;
             NewInternationalLicense.CreatedByUserID = CreatedByUserID;
 
-            if (NewInternationalLicense.Save())
+            if (!NewInternationalLicense.Save())
             {
-                OldInternationalLicense?.Deactivate();
-                return NewInternationalLicense;
-            }
-            else
+                clsApplication.DeleteApplication(Application.ApplicationID);
                 return null;
+            }
+
+            OldInternationalLicense?.Deactivate();
+            return NewInternationalLicense;
         }
 
     }

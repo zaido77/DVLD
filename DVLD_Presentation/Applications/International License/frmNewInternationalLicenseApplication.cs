@@ -16,7 +16,6 @@ namespace DVLD_Presentation.Licenses.International_Licenses
 {
     public partial class frmNewInternationalLicenseApplication : frmBase
     {
-        clsApplication _Application = new clsApplication(clsApplication.enApplicationType.NewInternationalLicense);
         clsInternationalLicense _InternationalLicense = new clsInternationalLicense();
         clsLicense _SelectedLocalLicense;
 
@@ -25,20 +24,11 @@ namespace DVLD_Presentation.Licenses.International_Licenses
             InitializeComponent();
         }
 
-        private bool _HandleNewInternationalApplicationSave()
-        {
-            _Application.ApplicantPersonID = _SelectedLocalLicense.DriverInfo.PersonID;
-            _Application.Status = clsApplication.enStatus.Completed;
-            _Application.CreatedByUserID = clsGlobal.CurrentUser.ID;
-
-            return _Application.Save();
-        }
-
         private void frmIssueInternationalLicense_Load(object sender, EventArgs e)
         {
-            lblApplicationDate.Text = clsFormat.DateToString(_Application.ApplicationDate);
+            lblApplicationDate.Text = clsFormat.DateToString(_InternationalLicense.ApplicationInfo.ApplicationDate);
             lblIssueDate.Text = clsFormat.DateToString(_InternationalLicense.IssueDate);
-            lblFees.Text = _Application.ApplicationTypeInfo.Fees.ToString();
+            lblFees.Text = _InternationalLicense.ApplicationInfo.ApplicationTypeInfo.Fees.ToString();
             lblExpirationDate.Text = clsFormat.DateToString(_InternationalLicense.ExpirationDate);
             lblCreatedBy.Text = clsGlobal.CurrentUser.Username;
         }
@@ -115,16 +105,10 @@ namespace DVLD_Presentation.Licenses.International_Licenses
 
         private void btnIssueLicense_Click(object sender, EventArgs e)
         {
-            if (clsMessageBox.ShowConfirmQuestion("Are you sure you want to issue the license?") == DialogResult.No)
+            if (!clsMessageBox.ShowConfirmQuestion("Are you sure you want to issue the license?"))
                 return;
 
-            if (!_HandleNewInternationalApplicationSave())
-            {
-                clsMessageBox.ShowError("Failed to save the application.");
-                return;
-            }
-
-            _InternationalLicense = _SelectedLocalLicense.IssueInternationalLicense(_Application.ApplicationID, clsGlobal.CurrentUser.ID);
+            _InternationalLicense = _SelectedLocalLicense.IssueInternationalLicense(clsGlobal.CurrentUser.ID);
 
             if (_InternationalLicense != null)
             {

@@ -58,6 +58,43 @@ namespace DVLD_DataAccess
             return IsFound;
         }
 
+        public static bool UpdateLicenseClass(int LicenseClassID, byte MinimumAllowedAge, byte DefaultValidityLength, float ClassFees)
+        {
+            int RowsAffected = 0;
+
+            SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
+
+            string query = @"UPDATE LicenseClasses
+                                SET MinimumAllowedAge = @MinimumAllowedAge,
+                                DefaultValidityLength = @DefaultValidityLength,
+                                ClassFees = @ClassFees
+                             WHERE LicenseClassID = @LicenseClassID";
+
+            SqlCommand command = new SqlCommand(query, connection);
+
+            command.Parameters.AddWithValue("@LicenseClassID", LicenseClassID);
+            command.Parameters.AddWithValue("@MinimumAllowedAge", MinimumAllowedAge);
+            command.Parameters.AddWithValue("@DefaultValidityLength", DefaultValidityLength);
+            command.Parameters.AddWithValue("@ClassFees", ClassFees);
+
+            try
+            {
+                connection.Open();
+
+                RowsAffected = command.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return (RowsAffected > 0);
+        }
+
         public static DataTable GetAllLicenseClasses()
         {
             DataTable dataTable = new DataTable();
@@ -90,5 +127,6 @@ namespace DVLD_DataAccess
 
             return dataTable;
         }
+
     }
 }

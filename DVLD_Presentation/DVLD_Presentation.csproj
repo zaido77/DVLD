@@ -139,6 +139,18 @@
     <Compile Include="Licenses\International Licenses\Controls\ctrlInternationalLicenseCard.Designer.cs">
       <DependentUpon>ctrlInternationalLicenseCard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Licenses\License Classes\frmEditLicenseClass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Licenses\License Classes\frmEditLicenseClass.Designer.cs">
+      <DependentUpon>frmEditLicenseClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Licenses\License Classes\frmListLicenseClasses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Licenses\License Classes\frmListLicenseClasses.Designer.cs">
+      <DependentUpon>frmListLicenseClasses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Licenses\Local Licenses\Controls\ctrlLocalLicenseCardWithFilter.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -176,7 +188,7 @@
       <DependentUpon>frmShowLocalDrivingLicenseApplicationInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Classes\clsGlobal.cs" />
-    <Compile Include="Global\Classes\clsSettings.cs" />
+    <Compile Include="Global\Classes\clsUISettings.cs" />
     <Compile Include="frmBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -397,6 +409,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\International Licenses\Controls\ctrlInternationalLicenseCard.resx">
       <DependentUpon>ctrlInternationalLicenseCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\License Classes\frmEditLicenseClass.resx">
+      <DependentUpon>frmEditLicenseClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Licenses\License Classes\frmListLicenseClasses.resx">
+      <DependentUpon>frmListLicenseClasses.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Licenses\Local Licenses\Controls\ctrlLocalLicenseCardWithFilter.resx">
       <DependentUpon>ctrlLocalLicenseCardWithFilter.cs</DependentUpon>
@@ -766,6 +784,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DVLD Logo.ico" />
+    <None Include="Resources\License Class 32.png" />
+    <None Include="Resources\License Class 512.png" />
+    <None Include="Resources\Manage Lookups 64.png" />
+    <None Include="Resources\Application Types 32.png" />
+    <None Include="Resources\Test Type 32.png" />
     <None Include="Resources\Detained Driving License 32.png" />
     <None Include="Resources\Release Detained License 32.png" />
     <None Include="Resources\Detain 32.png" />

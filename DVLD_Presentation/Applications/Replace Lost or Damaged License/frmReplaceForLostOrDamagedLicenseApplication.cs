@@ -124,11 +124,9 @@ namespace DVLD_Presentation.Applications.Replacement_for_Lost_or_Damaged_License
 
         private void btnIssueReplacement_Click(object sender, EventArgs e)
         {
-            if (clsMessageBox.ShowConfirmQuestion("Are you sure you want to Issue a Replacement for the license?")
-                == DialogResult.No)
-            {
+            if (!clsMessageBox.ShowConfirmQuestion("Are you sure you want to Issue a Replacement for the license?"))
                 return;
-            }
+
 
             _ReplacedLicense = _SelectedLicense.ReplaceLicense(IssueReason, clsGlobal.CurrentUser.ID);
 

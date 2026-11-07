@@ -76,7 +76,7 @@ namespace DVLD_DataAccess
             return IsFound;
         }
 
-        public static bool GetCurrentDetainedLicenseInfo(int LicenseID, ref int DetainID,
+        public static bool GetDetainedLicenseInfoByLicenseID(int LicenseID, ref int DetainID,
             ref DateTime DetainDate, ref float FineFees, ref int CreatedByUserID,
             ref bool IsReleased, ref DateTime ReleaseDate,
             ref int ReleasedByUserID, ref int ReleaseApplicationID)
@@ -85,8 +85,9 @@ namespace DVLD_DataAccess
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
-            string query = @"SELECT * FROM DetainedLicenses
-                             WHERE LicenseID = @LicenseID AND IsReleased = 0";
+            string query = @"SELECT TOP 1 * FROM DetainedLicenses
+                             WHERE LicenseID = @LicenseID
+                             ORDER BY DetainID DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@LicenseID", LicenseID);

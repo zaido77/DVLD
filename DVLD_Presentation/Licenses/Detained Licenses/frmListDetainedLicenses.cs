@@ -107,5 +107,10 @@ namespace DVLD_Presentation.Licenses.Detained_Licenses
             releaseDetainedLicenseToolStripMenuItem.Enabled =
                 !(bool)dlDetainedLicenses.SelectedRow.Cells["IsReleased"].Value;
         }
+
+        private void dlDetainedLicenses_RowDoubleClick(object sender, EventArgs e)
+        {
+            showLicenseDetailsToolStripMenuItem_Click(null, null);
+        }
     }
 }

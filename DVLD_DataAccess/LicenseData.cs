@@ -211,7 +211,7 @@ namespace DVLD_DataAccess
             return IsFound;
         }
 
-        public static DataTable GetAllLocalLicensesFor(int DriverID)
+        public static DataTable GetDriverLocalLicenses(int DriverID)
         {
             DataTable dataTable = new DataTable();
 
@@ -227,7 +227,7 @@ namespace DVLD_DataAccess
                              FROM Licenses L
                              INNER JOIN LicenseClasses LC ON L.LicenseClassID = LC.LicenseClassID
                              WHERE L.DriverID = @DriverID
-                             ORDER BY L.IsActive DESC";
+                             ORDER BY L.IsActive DESC, L.ExpirationDate DESC";
 
             SqlCommand command = new SqlCommand(query, connection);
             command.Parameters.AddWithValue("@DriverID", DriverID);
@@ -292,20 +292,19 @@ namespace DVLD_DataAccess
             return LicenseID;
         }
 
-        public static bool UpdateIsActive(int LicenseID, bool IsActive)
+        public static bool DeactivateLicense(int LicenseID)
         {
             int rowsAffected = 0;
 
             SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString);
 
             string query = @"UPDATE Licenses
-                             SET IsActive = @IsActive
+                             SET IsActive = 0
                              WHERE LicenseID = @LicenseID;";
 
             SqlCommand command = new SqlCommand(query, connection);
 
             command.Parameters.AddWithValue("@LicenseID", LicenseID);
-            command.Parameters.AddWithValue("@IsActive", IsActive);
 
             try
             {
@@ -324,7 +323,6 @@ namespace DVLD_DataAccess
 
             return (rowsAffected > 0);
         }
-
 
     }
 

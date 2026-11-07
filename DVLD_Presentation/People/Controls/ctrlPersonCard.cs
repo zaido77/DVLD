@@ -42,7 +42,7 @@ namespace DVLD_Presentation.People
         {
             InitializeComponent();
 
-            lblName.ForeColor = clsSettings.MainColor;
+            lblName.ForeColor = clsUISettings.MainColor;
         }
 
         private void _LoadPersonImage()

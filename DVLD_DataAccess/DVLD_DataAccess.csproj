@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="ApplicationTypeData.cs" />
     <Compile Include="ApplicationData.cs" />
-    <Compile Include="clsDetainedLicenseData.cs" />
+    <Compile Include="DetainedLicenseData.cs" />
     <Compile Include="InternationalLicenseData.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="TestAppointmentData.cs" />

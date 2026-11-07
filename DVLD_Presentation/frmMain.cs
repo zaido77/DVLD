@@ -10,6 +10,7 @@ using DVLD_Presentation.Global_Classes;
 using DVLD_Presentation.Licenses;
 using DVLD_Presentation.Licenses.Detained_Licenses;
 using DVLD_Presentation.Licenses.International_Licenses;
+using DVLD_Presentation.Licenses.License_Classes;
 using DVLD_Presentation.Login;
 using DVLD_Presentation.People;
 using DVLD_Presentation.Tests.Test_Types;
@@ -73,11 +74,6 @@ namespace DVLD_Presentation
             frm.ShowDialog();
         }
 
-        private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form frm = new frmListApplicationTypes();
-            frm.ShowDialog();
-        }
 
         private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -154,6 +150,24 @@ namespace DVLD_Presentation
         private void releaseDetainedLicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form frm = new frmReleaseDetainedLicense();
+            frm.ShowDialog();
+        }
+
+        private void manageApplicationTypesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmListApplicationTypes();
+            frm.ShowDialog();
+        }
+
+        private void manageTestTypesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmListTestTypes();
+            frm.ShowDialog();
+        }
+
+        private void manageLicenseClassesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form frm = new frmListLicenseClasses();
             frm.ShowDialog();
         }
     }

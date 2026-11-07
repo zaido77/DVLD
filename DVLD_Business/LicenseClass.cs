@@ -40,6 +40,11 @@ namespace DVLD_Business
             _Mode = enMode.Update;
         }
 
+        private bool _UpdateLicenseClass()
+        {
+            return clsLicenseClassData.UpdateLicenseClass((int)ID, MinimumAllowedAge, DefaultValidityLength, ClassFees);
+        }
+
         public static clsLicenseClass Find(enLicenseClass LicenseClassID)
         {
             string ClassName = "";
@@ -57,6 +62,17 @@ namespace DVLD_Business
             else
 
                 return null;
+        }
+
+        public bool Save()
+        {
+            switch (_Mode)
+            {
+                case enMode.Update:
+                    return _UpdateLicenseClass();
+            }
+
+            return false;
         }
 
         public static DataTable GetAllLicenseClasses()

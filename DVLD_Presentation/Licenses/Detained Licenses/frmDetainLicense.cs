@@ -101,12 +101,13 @@ namespace DVLD_Presentation.Licenses.Detained_Licenses
                 return;
             }
 
-            if (clsMessageBox.ShowConfirmQuestion("Are you sure you want to detain this license?") == DialogResult.No)
+            if (!clsMessageBox.ShowConfirmQuestion("Are you sure you want to detain this license?"))
                 return;
 
-            if (_SelectedLicense.Detain(Convert.ToSingle(txtFineFees.Text), clsGlobal.CurrentUser.ID))
+            int DetainID = -1;
+            if (_SelectedLicense.Detain(Convert.ToSingle(txtFineFees.Text), clsGlobal.CurrentUser.ID, ref DetainID))
             {
-                int DetainID = _SelectedLicense.GetActiveDetainID();
+                //int DetainID = _SelectedLicense.GetActiveDetainID();
                 lblDetainID.Text = DetainID.ToString();
 
                 clsMessageBox.ShowInfo($"License Detained Succesfully with ID={DetainID}");

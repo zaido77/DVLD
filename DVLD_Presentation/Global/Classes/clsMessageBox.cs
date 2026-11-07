@@ -33,9 +33,9 @@ namespace DVLD_Presentation.Global_Classes
                 "Validation Error");
         }
 
-        public static DialogResult ShowConfirmQuestion(string Message, string Title = "Confirm")
+        public static bool ShowConfirmQuestion(string Message, string Title = "Confirm")
         {
-            return MessageBox.Show(Message, Title, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            return MessageBox.Show(Message, Title, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
         }
 
     }

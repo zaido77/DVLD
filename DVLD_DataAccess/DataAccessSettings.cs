@@ -8,7 +8,7 @@ namespace DVLD_DataAccess
 {
     internal static class clsDataAccessSettings
     {
-        public static string ConnectionString { get; set; } =
+        public static string ConnectionString { get; private set; } =
             "Server=.;Database=DVLD;User Id=sa;Password=123456;";
     }
 }

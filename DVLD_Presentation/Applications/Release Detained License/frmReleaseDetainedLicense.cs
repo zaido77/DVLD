@@ -77,11 +77,11 @@ namespace DVLD_Presentation.Applications.Release_Detained_License
                 return;
             }
 
-            _DetainedLicense = clsDetainedLicense.GetCurrentDetainedLicenseInfo(LicenseID);
+            _DetainedLicense = clsDetainedLicense.FindByLicenseID(LicenseID);
 
             lblDetainID.Text = _DetainedLicense.DetainID.ToString();
             lblDetainDate.Text = clsFormat.DateToString(_DetainedLicense.DetainDate);
-            lblDetainedBy.Text = clsUser.Find(_DetainedLicense.CreatedByUserID).Username;
+            lblDetainedBy.Text = _DetainedLicense.CreatedByUserInfo.Username;
             lblApplicationFees.Text = clsApplicationType.Find((int)clsApplication.enApplicationType.ReleaseDetainedDrivingLicense).Fees.ToString();
             lblFineFees.Text = _DetainedLicense.FineFees.ToString();
             lblTotalFees.Text = (Convert.ToSingle(lblApplicationFees.Text) + Convert.ToSingle(lblFineFees.Text)).ToString();
@@ -103,7 +103,7 @@ namespace DVLD_Presentation.Applications.Release_Detained_License
 
         private void btnReleaseDetainedLicense_Click(object sender, EventArgs e)
         {
-            if (clsMessageBox.ShowConfirmQuestion("Are you sure you want to release this license?") == DialogResult.No)
+            if (!clsMessageBox.ShowConfirmQuestion("Are you sure you want to release this license?"))
                 return;
 
             if (_DetainedLicense.Release(clsGlobal.CurrentUser.ID))

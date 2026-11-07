@@ -40,7 +40,7 @@ namespace DVLD_Presentation.Global_Controls
         {
             InitializeComponent();
 
-            lblTitle.ForeColor = clsSettings.MainColor;
+            lblTitle.ForeColor = clsUISettings.MainColor;
         }
     }
 }

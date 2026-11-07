@@ -34,7 +34,7 @@ namespace DVLD_Presentation.Licenses.Local_Licenses
         {
             InitializeComponent();
 
-            lblName.ForeColor = clsSettings.MainColor;
+            lblName.ForeColor = clsUISettings.MainColor;
         }
 
         private void _LoadDriverImage()

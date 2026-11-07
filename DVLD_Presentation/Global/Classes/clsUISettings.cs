@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DVLD_Presentation
 {
-    internal static class clsSettings
+    internal static class clsUISettings
     {
         public static Color MainColor { get; private set; } = Color.FromArgb(192, 0, 0); // Red
     }

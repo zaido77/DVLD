@@ -51,7 +51,6 @@ namespace DVLD_Business
             }
         }
 
-
         public int CreatedByUserID { get; set; }
         public clsUser CreatedByUserInfo;
     
@@ -62,7 +61,7 @@ namespace DVLD_Business
 
         public bool IsExpired
         {
-            get { return ExpirationDate < DateTime.Today; }
+            get { return ExpirationDate < DateTime.Now; }
         }
 
         public clsLicense()
@@ -162,9 +161,11 @@ namespace DVLD_Business
                 return null;
         }
 
+        // to check for IsActive and with GetActiveLicenseID()
         public static bool IsLicenseExist(int PersonID, clsLicenseClass.enLicenseClass LicenseClass)
         {
             return clsLicenseData.IsLicenseExist(PersonID, (int)LicenseClass);
+            //return GetActiveLicenseID(PersonID, (int)LicenseClass) != -1;
         }
 
         public bool Save()
@@ -187,9 +188,9 @@ namespace DVLD_Business
             return false;
         }
         
-        public static DataTable GetAllLocalLicensesFor(int DriverID)
+        public static DataTable GetDriverLocalLicenses(int DriverID)
         {
-            return clsLicenseData.GetAllLocalLicensesFor(DriverID);
+            return clsLicenseData.GetDriverLocalLicenses(DriverID);
         }
 
         public static int GetActiveLicenseID(int PersonID, int LicenseClassID)
@@ -202,15 +203,20 @@ namespace DVLD_Business
             return clsInternationalLicense.GetActiveInternationalLicenseByDriverID(this.DriverID);
         }
 
-        public clsInternationalLicense IssueInternationalLicense(int ApplicationID, int CreatedByUserID)
+        public clsInternationalLicense IssueInternationalLicense(int CreatedByUserID)
         {
-            return clsInternationalLicense.IssueInternationalLicense(this.ID, ApplicationID, CreatedByUserID);
+            return clsInternationalLicense.IssueInternationalLicense(this.ID, CreatedByUserID);
         }
 
         public bool Deactivate()
         {
-            IsActive = false;
-            return clsLicenseData.UpdateIsActive(ID, false);
+            if (clsLicenseData.DeactivateLicense(ID))
+            {
+                IsActive = false;
+                return true;
+            }
+
+            return false;
         }
 
         public clsLicense RenewLicense(string Notes, int CreatedByUserID)
@@ -295,14 +301,24 @@ namespace DVLD_Business
             return NewLicense;
         }
 
-        public bool Detain(float FineFees, int CreatedByUserID)
-        {
-            return clsDetainedLicense.DetainLicense(this.ID, FineFees, CreatedByUserID);
-        }
-
         public int GetActiveDetainID()
         {
             return clsDetainedLicense.GetLicenseActiveDetainID(this.ID);
+        }
+
+        public bool Detain(float FineFees, int CreatedByUserID, ref int DetainID)
+        {
+            return clsDetainedLicense.DetainLicense(this.ID, FineFees, CreatedByUserID, ref DetainID);
+        }
+
+        public bool Release(int ReleasedByUserID)
+        {
+            clsDetainedLicense DetainedLicense = clsDetainedLicense.FindByLicenseID(this.ID);
+
+            if (DetainedLicense == null)
+                return false;
+
+            return DetainedLicense.Release(ReleasedByUserID);
         }
 
     }
